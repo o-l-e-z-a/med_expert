@@ -1,0 +1,6 @@
+*/*__pycache__/
+.idea/
+med_expert_venv/
+*/migrations
+*pyc
+med_expert/local_settings.py
