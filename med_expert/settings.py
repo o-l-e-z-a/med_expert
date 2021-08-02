@@ -50,10 +50,11 @@ WSGI_APPLICATION = 'med_expert.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_NAME,
+        'NAME': 'postgres',
         'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST': DB_HOST,
+        # 'PASSWORD': DB_PASSWORD,
+        'HOST': 'db',
+        'PORT': 5432
     }
 }
 
