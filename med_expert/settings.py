@@ -1,6 +1,5 @@
 import os
 
-# SECRET_KEY = os.environ['SECRET_KEY']
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = bool(int(os.environ.get("DEBUG", default=1)))
@@ -103,11 +102,3 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
 }
-
-
-# CORS_ORIGIN_WHITELIST = [
-#     'httpls://localhost:8000',
-#     'httpls://localhost:8001',
-#     'httpls://127.0.0.1:8000'
-# ]
-
