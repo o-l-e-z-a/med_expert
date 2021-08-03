@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - med_expert_postgres_data:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+  django:
+    container_name: med_expert
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: bash -c "python /usr/src/med_expert/manage.py migrate --noinput &&
+             python /usr/src/med_expert/manage.py runserver 0.0.0.0:8000 "
+    volumes:
+      - .:/usr/src/med_expert
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    env_file:
+      - ./.env
+
+volumes:
+  med_expert_postgres_data:

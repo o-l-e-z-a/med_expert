@@ -1,9 +1,13 @@
 import os
 
-from .local_settings import DB_HOST, DEBUG, DB_USER, DB_NAME, DB_PASSWORD, ALLOWED_HOSTS, SECRET_KEY
+# SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.environ.get("SECRET_KEY")
+
+DEBUG = bool(int(os.environ.get("DEBUG", default=1)))
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -47,15 +51,18 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'med_expert.wsgi.application'
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST': DB_HOST,
+    "default": {
+        "ENGINE": os.environ.get("DB_ENGINE"),
+        "NAME": os.environ.get("DB_DATABASE"),
+        "USER": os.environ.get("DB_USER", "user"),
+        "PASSWORD": os.environ.get("DB_PASSWORD", "password"),
+        "HOST": os.environ.get("DB_HOST", "localhost"),
+        "PORT": os.environ.get("DB_PORT", "5432"),
     }
 }
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -85,6 +92,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIR = [STATIC_ROOT]
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -94,3 +103,11 @@ REST_FRAMEWORK = {
         'django_filters.rest_framework.DjangoFilterBackend',
     ),
 }
+
+
+# CORS_ORIGIN_WHITELIST = [
+#     'httpls://localhost:8000',
+#     'httpls://localhost:8001',
+#     'httpls://127.0.0.1:8000'
+# ]
+
