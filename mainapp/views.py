@@ -43,7 +43,7 @@ class CategoryListView(ListAPIView):
 
 
 class SearchView(ListAPIView):
-    queryset = Service.objects.all()
+    queryset = Service.objects.all().select_related('category')
     serializer_class = SearchSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['name', "category__name"]
@@ -60,5 +60,5 @@ class CompanyTypeDetailView(ListAPIView):
     serializer_class = CompanyListSerializer
 
     def get_queryset(self):
-        return Company.objects.filter(type__url=self.kwargs['slug'])
+        return Company.objects.select_related('type').filter(type__url=self.kwargs['slug'])
 
