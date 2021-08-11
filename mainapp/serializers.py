@@ -3,6 +3,7 @@ from .models import License, Company, Category, Service, News
 
 
 class LicenseSerializer(ModelSerializer):
+    """ Сериализатор для просмотра лицензий """
 
     class Meta:
         model = License
@@ -10,24 +11,23 @@ class LicenseSerializer(ModelSerializer):
 
 
 class NewsDetailSerializer(ModelSerializer):
+    """ Сериализатор для просмотра конкретной новости """
+
     class Meta:
         model = News
         fields = '__all__'
 
 
 class NewsListSerializer(ModelSerializer):
+    """ Сериализатор для просмотра списка новостей """
+
     class Meta:
         model = News
         exclude = ['photo']
 
 
-class ServiceSerializer(ModelSerializer):
-    class Meta:
-        model = Service
-        exclude = ['category']
-
-
 class ServiceListSerializer(ModelSerializer):
+    """ Сериализатор для просмотра услуг"""
 
     class Meta:
         model = Service
@@ -35,18 +35,22 @@ class ServiceListSerializer(ModelSerializer):
 
 
 class FilterCategoryListSerializer(ListSerializer):
+    """ Сериализатор для рекурсивного вывода родительских категорий """
     def to_representation(self, data):
         data = data.filter(parent_id=None)
         return super().to_representation(data)
 
 
 class RecursiveSerializer(Serializer):
+    """ Сериализатор для рекурсивного вывода "детей" категории"""
     def to_representation(self, value):
         serializer = self.parent.parent.__class__(value, context=self.context)
         return serializer.data
 
 
 class CategoryListSerializer(ModelSerializer):
+    """ Сериализатор для просмотра категорий """
+
     children = RecursiveSerializer(many=True)
 
     class Meta:
@@ -56,6 +60,7 @@ class CategoryListSerializer(ModelSerializer):
 
 
 class CompanyListSerializer(ModelSerializer):
+    """ Сериализатор для просмотра списка компаний"""
 
     class Meta:
         model = Company
@@ -63,6 +68,7 @@ class CompanyListSerializer(ModelSerializer):
 
 
 class SearchSerializer(ModelSerializer):
+    """ Сериализатор для поиска"""
     category = SlugRelatedField(slug_field='name', read_only=True)
 
     class Meta:

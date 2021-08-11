@@ -15,12 +15,14 @@ from .service import PaginationNews
 
 
 class NewsListView(ListAPIView):
+    """ Просмотр списка новостей """
     serializer_class = NewsListSerializer
     queryset = News.objects.all()
     pagination_class = PaginationNews
 
 
 class NewsDetailView(RetrieveAPIView):
+    """ Детальный просмотр конкретной новости"""
     serializer_class = NewsDetailSerializer
     queryset = News.objects.all()
     lookup_url_kwarg = 'slug'
@@ -28,21 +30,25 @@ class NewsDetailView(RetrieveAPIView):
 
 
 class LicenseListView(ListAPIView):
+    """ Просмотр списка лицензий"""
     serializer_class = LicenseSerializer
     queryset = License.objects.all()
 
 
 class LicenseDetailView(RetrieveAPIView):
+    """ Детальный просмотр конкртетной лицензии"""
     serializer_class = LicenseSerializer
     queryset = License.objects.all()
 
 
 class CategoryListView(ListAPIView):
+    """ Просмотр списка категорий"""
     queryset = Category.objects.all()
     serializer_class = CategoryListSerializer
 
 
 class SearchView(ListAPIView):
+    """ Поиск """
     queryset = Service.objects.all()
     serializer_class = SearchSerializer
     filter_backends = [filters.SearchFilter]
@@ -50,6 +56,7 @@ class SearchView(ListAPIView):
 
 
 class CategoryDetailView(ListAPIView):
+    """  Просмотр услуг, принадлежащих к конкретной категории"""
     serializer_class = ServiceListSerializer
 
     def get_queryset(self):
@@ -57,6 +64,7 @@ class CategoryDetailView(ListAPIView):
 
 
 class CompanyTypeDetailView(ListAPIView):
+    """  Просмотр компаний, принадлежащих к конкретному типу компании"""
     serializer_class = CompanyListSerializer
 
     def get_queryset(self):

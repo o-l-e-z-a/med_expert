@@ -3,6 +3,7 @@ from datetime import date
 
 
 class News(models.Model):
+    """ Модель новости"""
     name = models.CharField('Название', max_length=155)
     url = models.SlugField('Url', unique=True, max_length=120)
     description = models.TextField('Описание')
@@ -18,6 +19,7 @@ class News(models.Model):
 
 
 class License(models.Model):
+    """ Модель лицензии"""
     name = models.CharField('Название', max_length=150)
     photo = models.ImageField('Фото', upload_to='license/', blank=True, null=True)
 
@@ -30,6 +32,7 @@ class License(models.Model):
 
 
 class Category(models.Model):
+    """ Модель катгеории"""
     name = models.CharField('Название', max_length=155, unique=True)
     parent = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True, verbose_name='Родитель',
                                related_name="children")
@@ -45,6 +48,7 @@ class Category(models.Model):
 
 
 class Service(models.Model):
+    """ Модель услуг"""
     name = models.CharField('Название', max_length=155)
     price = models.DecimalField('Цена', max_digits=12, decimal_places=2)
     category = models.ForeignKey(Category, verbose_name='Категория', on_delete=models.CASCADE)
@@ -58,6 +62,7 @@ class Service(models.Model):
 
 
 class CompanyType(models.Model):
+    """ Модель типа компании"""
     name = models.CharField('Название', max_length=150, unique=True)
     url = models.SlugField(max_length=155, unique=True)
 
@@ -70,6 +75,7 @@ class CompanyType(models.Model):
 
 
 class Company(models.Model):
+    """ Модель компании"""
     name = models.CharField('Название', max_length=150, unique=True)
     type = models.ForeignKey(CompanyType, verbose_name='Тип', on_delete=models.CASCADE)
 

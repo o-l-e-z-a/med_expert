@@ -1,9 +1,6 @@
-from datetime import timedelta, date
-
-from decimal import Decimal
+from datetime import date
 
 from django.urls import reverse
-from django.utils import timezone
 
 from rest_framework import status
 from rest_framework.test import APITestCase
@@ -13,6 +10,7 @@ from .serializers import ServiceListSerializer, LicenseSerializer
 
 
 class NewsTests(APITestCase):
+    """ Тестирование новостей"""
 
     def setUp(self) -> None:
         self.news1 = News.objects.create(name='test-1', url='test-1', description='test_description', date='2020-07-04')
@@ -46,6 +44,7 @@ class NewsTests(APITestCase):
 
 
 class LicenseTests(APITestCase):
+    """ Тестирование лицензий"""
 
     def setUp(self) -> None:
         self.license1 = License.objects.create(name='license_1')
@@ -78,6 +77,7 @@ class LicenseTests(APITestCase):
 
 
 class CompanyTests(APITestCase):
+    """ Тестирование компаний"""
 
     def setUp(self) -> None:
         self.company_type = CompanyType.objects.create(name='Партнеры', url='partneri')
@@ -94,7 +94,8 @@ class CompanyTests(APITestCase):
         self.assertEqual(len(response.data), 0)
 
 
-class ServiceSearchTests(APITestCase):
+class ServiceSearchCategoryTests(APITestCase):
+    """ Тестирование поиска, услуг, категорий"""
 
     def setUp(self) -> None:
         self.category1 = Category.objects.create(name='Приём врачей', url='prichem-vrachej')
@@ -143,6 +144,4 @@ class ServiceSearchTests(APITestCase):
         response = self.client.get(reverse('search') + '?search=fdbdfbdfb', format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 0)
-
-
 
