@@ -31,8 +31,8 @@ class License(models.Model):
 
 class Category(models.Model):
     name = models.CharField('Название', max_length=155, unique=True)
-    parent_id = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True, verbose_name='Родитель',
-                                  related_name="children")
+    parent = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True, verbose_name='Родитель',
+                               related_name="children")
     description = models.TextField('Описание', blank=True, null=True)
     url = models.SlugField('Url', unique=True)
 
@@ -79,4 +79,3 @@ class Company(models.Model):
     class Meta:
         verbose_name = 'Компания'
         verbose_name_plural = 'Компании'
-
