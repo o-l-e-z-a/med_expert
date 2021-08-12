@@ -13,7 +13,7 @@
 - Docker <br/>
 
 ## Запуск проекта:
-- git clone  <br/>
+- git clone https://github.com/o-l-e-z-a/med_expert.git<br/>
 - cd med_expert <br/>
 - создать .env файл со след константами: DEBUG, SECRET_KEY,DJANGO_ALLOWED_HOSTS,DB_ENGINE,DB_DATABASE,DB_USER,DB_PASSWORD,DB_HOST,DB_PORT
 - docker-compose build <br/>
